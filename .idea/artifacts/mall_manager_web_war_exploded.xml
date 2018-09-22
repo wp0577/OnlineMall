@@ -38,6 +38,9 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-jms:4.2.4.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-messaging:4.2.4.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context-support:4.2.4.RELEASE" />
+          <element id="archive" name="mall-manager-interface-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="mall-manager-interface" />
+          </element>
           <element id="library" level="project" name="Maven: jstl:jstl:1.2" />
           <element id="archive" name="mall-common-1.0-SNAPSHOT.jar">
             <element id="module-output" name="mall-common" />
