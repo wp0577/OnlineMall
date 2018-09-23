@@ -9,14 +9,6 @@
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
 
-  <!-- 加载spring容器 -->
-  <context-param>
-    <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:spring/applicationContext*.xml</param-value>
-  </context-param>
-  <listener>
-    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  </listener>
 
   <!-- 解决post乱码 -->
   <filter>
@@ -35,7 +27,7 @@
 
   <!-- springmvc的前端控制器 -->
   <servlet>
-    <servlet-name>e3-manager</servlet-name>
+    <servlet-name>mall-manager</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <!-- contextConfigLocation不是必须的， 如果不配置contextConfigLocation， springmvc的配置文件默认在：WEB-INF/servlet的name+"-servlet.xml" -->
     <init-param>
@@ -45,7 +37,8 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
-    <servlet-name>e3-manager</servlet-name>
+    <servlet-name>mall-manager</servlet-name>
+    <!--except jsp file-->
     <url-pattern>/</url-pattern>
   </servlet-mapping>
 
