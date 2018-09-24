@@ -14,9 +14,15 @@
 
     <!-- 引用dubbo服务 -->
     <dubbo:application name="e3-manager-web"/>
-    <dubbo:registry protocol="zookeeper" address="192.168.0.147:2181"/>
+    <dubbo:registry protocol="zookeeper" address="127.0.0.1:2181"/>
     <dubbo:reference interface="com.wp.service.ItemService" id="itemService" />
 
+
+
+    <!-- 配置资源映射
+     由于在web.xml中定义的url拦截形式为“/”表示拦截所有的url请求，包括静态资源例如css、js等。所以需要在springmvc.xml中添加资源映射标签-->
+    <mvc:resources location="/css/" mapping="/css/**"/>
+    <mvc:resources location="/js/" mapping="/js/**"/>
 
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

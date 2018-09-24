@@ -1,5 +1,6 @@
 package com.wp.service;
 
+import com.wp.common.PageResult;
 import com.wp.pojo.TbItem;
 
 /**
@@ -10,4 +11,5 @@ import com.wp.pojo.TbItem;
  **/
 public interface ItemService {
     TbItem getItemById(Long id);
+    PageResult getItemPage(int page, int rows);
 }
