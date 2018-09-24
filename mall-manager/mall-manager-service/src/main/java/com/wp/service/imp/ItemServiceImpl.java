@@ -2,7 +2,7 @@ package com.wp.service.imp;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.wp.common.PageResult;
+import com.wp.common.pojo.PageResult;
 import com.wp.mapper.TbItemMapper;
 import com.wp.pojo.TbItem;
 import com.wp.pojo.TbItemExample;

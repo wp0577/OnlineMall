@@ -1,6 +1,6 @@
 package com.wp.service;
 
-import com.wp.common.PageResult;
+import com.wp.common.pojo.PageResult;
 import com.wp.pojo.TbItem;
 
 /**

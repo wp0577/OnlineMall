@@ -1,4 +1,4 @@
-package com.wp.common;
+package com.wp.common.pojo;
 
 import java.io.Serializable;
 import java.util.List;

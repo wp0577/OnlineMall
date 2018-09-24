@@ -1,13 +1,12 @@
 package com.wp.controller;
 
-import com.wp.common.PageResult;
+import com.wp.common.pojo.PageResult;
 import com.wp.pojo.TbItem;
 import com.wp.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
