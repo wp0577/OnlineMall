@@ -1,7 +1,9 @@
 package com.wp.controller;
 
+import com.wp.common.pojo.E3Result;
 import com.wp.common.pojo.PageResult;
 import com.wp.pojo.TbItem;
+import com.wp.pojo.TbItemDesc;
 import com.wp.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,7 @@ public class ItemController {
     @Autowired
     private ItemService itemService;
 
+
     /*  使用RESTful风格开发的接口，根据id查询商品，接口地址是：
         http://127.0.0.1/item/1
         我们需要从url上获取商品id，步骤如下：
@@ -39,6 +42,66 @@ public class ItemController {
     public PageResult itemList(int page, int rows) {
         PageResult itemPage = itemService.getItemPage(page, rows);
         return itemPage;
+    }
+
+    @RequestMapping("/item/save")
+    @ResponseBody
+    public E3Result itemSave(TbItem tbItem, String desc) {
+        E3Result e3Result = itemService.saveItem(tbItem, desc);
+        return e3Result;
+    }
+
+    @RequestMapping("/rest/item/update")
+    @ResponseBody
+    public E3Result itemUpdate(TbItem tbItem, String desc) {
+        itemService.updateItem(tbItem, desc);
+        return E3Result.ok();
+    }
+
+    /**
+    * @Description: return item desc as json type
+    * @Param: item id
+    * @return:  json data
+    * @Author: Pan wu
+    * @Date: 9/25/18
+    */
+    @RequestMapping("/rest/item/query/item/desc/{id}")
+    @ResponseBody
+    public E3Result getItemDescById(@PathVariable long id) {
+        TbItemDesc desc = itemService.getItemDescById(id);
+        if(desc!=null) {
+            return E3Result.ok(desc);
+        }
+        else
+        return E3Result.ok();
+    }
+
+    /**
+    * @Description: delete one or more items
+    * @Param:  ids
+    * @return:
+    * @Author: Pan wu
+    * @Date: 9/25/18
+    */
+    @RequestMapping("/rest/item/delete")
+    @ResponseBody
+    public E3Result deleteItemById(long[] ids){
+        itemService.deleteItemById(ids);
+        return E3Result.ok();
+    }
+
+    @RequestMapping("/rest/item/reshelf")
+    @ResponseBody
+    public E3Result reshelf(long[] ids) {
+        itemService.updateItemByStatus(ids, 2);
+        return E3Result.ok();
+    }
+
+    @RequestMapping("/rest/item/instock")
+    @ResponseBody
+    public E3Result instock(long[] ids) {
+        itemService.updateItemByStatus(ids, 1);
+        return E3Result.ok();
     }
 
 }

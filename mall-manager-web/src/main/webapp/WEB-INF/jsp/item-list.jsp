@@ -4,20 +4,20 @@
     <thead>
         <tr>
         	<th data-options="field:'ck',checkbox:true"></th>
-        	<th data-options="field:'id',width:60">商品ID</th>
-            <th data-options="field:'title',width:200">商品标题</th>
-            <th data-options="field:'cid',width:100">叶子类目</th>
-            <th data-options="field:'sellPoint',width:100">卖点</th>
-            <th data-options="field:'price',width:70,align:'right',formatter:E3.formatPrice">价格</th>
-            <th data-options="field:'num',width:70,align:'right'">库存数量</th>
-            <th data-options="field:'barcode',width:100">条形码</th>
-            <th data-options="field:'status',width:60,align:'center',formatter:E3.formatItemStatus">状态</th>
-            <th data-options="field:'created',width:130,align:'center',formatter:E3.formatDateTime">创建日期</th>
-            <th data-options="field:'updated',width:130,align:'center',formatter:E3.formatDateTime">更新日期</th>
+        	<th data-options="field:'id',width:60">ITEM ID</th>
+            <th data-options="field:'title',width:200">ITEM TITLE</th>
+            <th data-options="field:'cid',width:100">CID</th>
+            <th data-options="field:'sellPoint',width:100">SELL POINT</th>
+            <th data-options="field:'price',width:70,align:'right',formatter:E3.formatPrice">PRICE</th>
+            <th data-options="field:'num',width:70,align:'right'">STOCK VOLUME</th>
+            <th data-options="field:'barcode',width:100">CARCODE</th>
+            <th data-options="field:'status',width:60,align:'center',formatter:E3.formatItemStatus">STATUS</th>
+            <th data-options="field:'created',width:130,align:'center',formatter:E3.formatDateTime">CREATE DATE</th>
+            <th data-options="field:'updated',width:130,align:'center',formatter:E3.formatDateTime">UPDATE DATE</th>
         </tr>
     </thead>
 </table>
-<div id="itemEditWindow" class="easyui-window" title="编辑商品" data-options="modal:true,closed:true,iconCls:'icon-save',href:'/rest/page/item-edit'" style="width:80%;height:80%;padding:10px;">
+<div id="itemEditWindow" class="easyui-window" title="Edit Item" data-options="modal:true,closed:true,iconCls:'icon-save',href:'/rest/page/item-edit'" style="width:80%;height:80%;padding:10px;">
 </div>
 <script>
 
@@ -31,24 +31,25 @@
     	ids = ids.join(",");
     	return ids;
     }
-    
+
     var toolbar = [{
-        text:'新增',
+        text:'add',
         iconCls:'icon-add',
         handler:function(){
-        	$(".tree-title:contains('新增商品')").parent().click();
+            //找menu tree中主题包含Add Item的内容，然后找到父级就是<li data-options="attributes:{'url':'item-add'}">Add Item</li>中的<li></li>
+        	$(".tree-title:contains('Add Item')").parent().click();
         }
     },{
-        text:'编辑',
+        text:'edit',
         iconCls:'icon-edit',
         handler:function(){
         	var ids = getSelectionsIds();
         	if(ids.length == 0){
-        		$.messager.alert('提示','必须选择一个商品才能编辑!');
+        		$.messager.alert('warning','You should choose at least one item!');
         		return ;
         	}
         	if(ids.indexOf(',') > 0){
-        		$.messager.alert('提示','只能选择一个商品!');
+        		$.messager.alert('warning','Only choose one item!');
         		return ;
         	}
         	
@@ -106,20 +107,20 @@
         	}).window("open");
         }
     },{
-        text:'删除',
+        text:'delete',
         iconCls:'icon-cancel',
         handler:function(){
         	var ids = getSelectionsIds();
         	if(ids.length == 0){
-        		$.messager.alert('提示','未选中商品!');
+        		$.messager.alert('warning','No item select!');
         		return ;
         	}
-        	$.messager.confirm('确认','确定删除ID为 '+ids+' 的商品吗？',function(r){
+        	$.messager.confirm('confirm','Are u sure to delete id: '+ids+' item？',function(r){
         	    if (r){
         	    	var params = {"ids":ids};
                 	$.post("/rest/item/delete",params, function(data){
             			if(data.status == 200){
-            				$.messager.alert('提示','删除商品成功!',undefined,function(){
+            				$.messager.alert('warning','Item delete successd!',undefined,function(){
             					$("#itemList").datagrid("reload");
             				});
             			}
@@ -128,20 +129,20 @@
         	});
         }
     },'-',{
-        text:'下架',
+        text:'ItemDownshelf',
         iconCls:'icon-remove',
         handler:function(){
         	var ids = getSelectionsIds();
         	if(ids.length == 0){
-        		$.messager.alert('提示','未选中商品!');
+        		$.messager.alert('warning','No item selected!');
         		return ;
         	}
-        	$.messager.confirm('确认','确定下架ID为 '+ids+' 的商品吗？',function(r){
+        	$.messager.confirm('confirm','Are u sure to remove id: '+ids+' item from its shelves？',function(r){
         	    if (r){
         	    	var params = {"ids":ids};
-                	$.post("/rest/item/instock",params, function(data){
+                	$.post("/rest/item/reshelf",params, function(data){
             			if(data.status == 200){
-            				$.messager.alert('提示','下架商品成功!',undefined,function(){
+            				$.messager.alert('ok','ItemDownShelf successd!',undefined,function(){
             					$("#itemList").datagrid("reload");
             				});
             			}
@@ -150,20 +151,20 @@
         	});
         }
     },{
-        text:'上架',
+        text:'ItemUpshelf',
         iconCls:'icon-remove',
         handler:function(){
         	var ids = getSelectionsIds();
         	if(ids.length == 0){
-        		$.messager.alert('提示','未选中商品!');
+        		$.messager.alert('warning','No item selected!');
         		return ;
         	}
-        	$.messager.confirm('确认','确定上架ID为 '+ids+' 的商品吗？',function(r){
+        	$.messager.confirm('confirm','Are u sure to put id: '+ids+' item on sale ？',function(r){
         	    if (r){
         	    	var params = {"ids":ids};
-                	$.post("/rest/item/reshelf",params, function(data){
+                	$.post("/rest/item/instock",params, function(data){
             			if(data.status == 200){
-            				$.messager.alert('提示','上架商品成功!',undefined,function(){
+            				$.messager.alert('ok','ItemUpShelf successd!',undefined,function(){
             					$("#itemList").datagrid("reload");
             				});
             			}

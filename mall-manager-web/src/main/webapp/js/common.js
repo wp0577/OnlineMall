@@ -48,11 +48,11 @@ var E3 = {
 	// 格式化商品的状态
 	formatItemStatus : function formatStatus(val,row){
         if (val == 1){
-            return '正常';
+            return 'available';
         } else if(val == 2){
-        	return '<span style="color:red;">下架</span>';
+        	return '<span style="color:red;">out stock</span>';
         } else {
-        	return '未知';
+        	return 'unknown';
         }
     },
     

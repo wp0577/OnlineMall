@@ -22,9 +22,9 @@
     <!-- 头部标题 -->
 	<div data-options="region:'north',border:false" style="height:60px; padding:5px; background:#F3F3F3"> 
 		<span class="northTitle">wp-mall backstage manager system</span>
-	    <span class="loginInfo">Username：admin&nbsp;&nbsp;Name：manager&nbsp;&nbsp;role：system manager</span>
+	    <span class="loginInfo">Username：admin&nbsp;&nbsp;Name：manager&nbsp;&nbsp;Role：system manager</span>
 	</div>
-    <div data-options="region:'west',title:'菜单',split:true" style="width:180px;">
+    <div data-options="region:'west',title:'MENU',split:true" style="width:180px;">
     	<ul id="menu" class="easyui-tree" style="margin-top: 10px;margin-left: 5px;">
          	<li>
          		<span>Item Manager</span>
