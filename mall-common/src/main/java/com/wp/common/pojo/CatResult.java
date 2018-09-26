@@ -11,6 +11,7 @@ import java.io.Serializable;
 public class CatResult implements Serializable {
     private long id;
     private String text;
+    //open or closed
     private String state;
 
     public CatResult() {

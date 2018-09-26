@@ -191,7 +191,7 @@
 <script src="/js/file-upload/jquery.fileupload-video.js"></script>
 <!-- The File Upload validation plugin -->
 <script src="/js/file-upload/jquery.fileupload-validate.js"></script>
-<!-- The File Upload user interface plugin -->
+<!-- The File Upload user service plugin -->
 <script src="/js/file-upload/jquery.fileupload-ui.js"></script>
 <!-- The main application script -->
 <script src="/js/file-upload/main.js"></script>
