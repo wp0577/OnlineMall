@@ -60,12 +60,12 @@ public class TbContentCategory implements Serializable {
         this.sortOrder = sortOrder;
     }
 
-    public Boolean getIsParent() {
-        return isParent;
-    }
-
     public void setIsParent(Boolean isParent) {
         this.isParent = isParent;
+    }
+
+    public Boolean getIsParent() {
+        return isParent;
     }
 
     public Date getCreated() {
