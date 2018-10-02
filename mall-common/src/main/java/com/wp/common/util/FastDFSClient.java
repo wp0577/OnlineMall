@@ -7,7 +7,9 @@ import org.csource.fastdfs.StorageServer;
 import org.csource.fastdfs.TrackerClient;
 import org.csource.fastdfs.TrackerServer;
 
-public class FastDFSClient {
+import java.io.Serializable;
+
+public class FastDFSClient implements Serializable {
 
 	private TrackerClient trackerClient = null;
 	private TrackerServer trackerServer = null;

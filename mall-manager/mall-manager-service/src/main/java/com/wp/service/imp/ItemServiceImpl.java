@@ -12,8 +12,13 @@ import com.wp.pojo.TbItemDesc;
 import com.wp.pojo.TbItemExample;
 import com.wp.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import javax.jms.*;
+import javax.swing.*;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +35,11 @@ public class ItemServiceImpl implements ItemService {
     private TbItemMapper tbItemMapper;
     @Autowired
     private TbItemDescMapper tbItemDescMapper;
+    @Autowired
+    private JmsTemplate jmsTemplate;
+    @Resource
+    //get bean by id
+    private Destination topicDestination;
 
     @Override
     public TbItem getItemById(Long id) {
@@ -50,6 +60,12 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public TbItemDesc getItemDescById(long id) {
+        TbItemDesc tbItemDesc = tbItemDescMapper.selectByPrimaryKey(id);
+        return tbItemDesc;
+    }
+
+    @Override
     public E3Result saveItem(TbItem tbItem, String desc) {
         //we use IdUtil to set id automatically because id do not autoincrement in database
         tbItem.setId(IDUtils.genItemId());
@@ -64,13 +80,15 @@ public class ItemServiceImpl implements ItemService {
         tbItemDesc.setCreated(new Date());
         tbItemDesc.setUpdated(new Date());
         tbItemDescMapper.insert(tbItemDesc);
+        //send a message to search-service by ActionMQ
+        jmsTemplate.send(topicDestination, new MessageCreator() {
+            @Override
+            public Message createMessage(Session session) throws JMSException {
+                TextMessage textMessage = session.createTextMessage(tbItem.getId() + "");
+                return textMessage;
+            }
+        });
         return E3Result.ok();
-    }
-
-    @Override
-    public TbItemDesc getItemDescById(long id) {
-        TbItemDesc tbItemDesc = tbItemDescMapper.selectByPrimaryKey(id);
-        return tbItemDesc;
     }
 
     @Override
@@ -90,6 +108,8 @@ public class ItemServiceImpl implements ItemService {
         tbItemDesc.setItemDesc(desc);
         tbItemDesc.setCreated(created2);
         tbItemDescMapper.updateByPrimaryKeyWithBLOBs(tbItemDesc);
+        // TODO: 10/2/18
+        //implemented activeMQ
     }
 
     @Override
@@ -98,6 +118,8 @@ public class ItemServiceImpl implements ItemService {
             tbItemMapper.deleteByPrimaryKey(id);
             tbItemDescMapper.deleteByPrimaryKey(id);
         }
+        // TODO: 10/2/18
+        //implemented activeMQ
     }
 
     @Override

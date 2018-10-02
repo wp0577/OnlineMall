@@ -18,6 +18,7 @@
     <dubbo:reference interface="com.wp.service.ItemService" id="itemService" />
     <dubbo:reference interface="com.wp.service.ItemCatService" id="itemCatService" />
     <dubbo:reference interface="com.wp.content.service.ContentService" id="contentService"/>
+    <dubbo:reference interface="com.wp.search.service.SearchItemService" id="searchItemService"/>
 
 
 

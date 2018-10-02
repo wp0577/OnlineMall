@@ -2,9 +2,11 @@ package com.wp.content.service.imp;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.wp.common.jedis.JedisClient;
 import com.wp.common.pojo.CatResult;
 import com.wp.common.pojo.E3Result;
 import com.wp.common.pojo.PageResult;
+import com.wp.common.util.JsonUtils;
 import com.wp.content.service.ContentService;
 import com.wp.mapper.TbContentCategoryMapper;
 import com.wp.mapper.TbContentMapper;
@@ -12,7 +14,9 @@ import com.wp.pojo.TbContent;
 import com.wp.pojo.TbContentCategory;
 import com.wp.pojo.TbContentCategoryExample;
 import com.wp.pojo.TbContentExample;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,6 +30,10 @@ public class ContentServiceImpl implements ContentService {
     private TbContentCategoryMapper tbContentCategoryMapper;
     @Autowired
     private TbContentMapper tbContentMapper;
+    @Autowired
+    private JedisClient jedisClient;
+    @Value(value = "${CONTENT_LIST}")
+    private String CONTENT_LIST;
 
     /**
     * @Description: get webpage content category by parentId
@@ -118,12 +126,14 @@ public class ContentServiceImpl implements ContentService {
         tbContent.setCreated(new Date());
         tbContent.setUpdated(new Date());
         tbContentMapper.insert(tbContent);
+        jedisClient.hdel(CONTENT_LIST, tbContent.getCategoryId().toString());
     }
 
     @Override
     public void updateContent(TbContent tbContent) {
         tbContent.setUpdated(new Date());
         tbContentMapper.updateByPrimaryKeySelective(tbContent);
+        jedisClient.hdel(CONTENT_LIST, tbContent.getCategoryId().toString());
     }
 
     @Override
@@ -131,13 +141,34 @@ public class ContentServiceImpl implements ContentService {
         for (long id: ids) {
             tbContentMapper.deleteByPrimaryKey(id);
         }
+        // TODO: 9/30/18
+        //delete redis by cid
     }
 
     @Override
     public List<TbContent> getContentByCatId(int i) {
+        //first to check whether there is content data stored in redis
+        //if it has, return list directly
+        try {
+            String content_list = jedisClient.hget(CONTENT_LIST, i + "");
+            if(StringUtils.isNotBlank(content_list)) {
+                return JsonUtils.jsonToList(content_list, TbContent.class);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        //if not continue, and use try-catch to ensure the process will not be
+        // interrupted by the error of redis server
         TbContentExample example = new TbContentExample();
         example.createCriteria().andCategoryIdEqualTo((long)i);
         List<TbContent> tbContents = tbContentMapper.selectByExample(example);
+        //if it don't have, store new data
+        try {
+            jedisClient.hset(CONTENT_LIST, i+"", JsonUtils.objectToJson(tbContents));
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         return tbContents;
     }
 }
