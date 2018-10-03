@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/mall-content/mall-content-service" />
+    <file type="web" url="file://$PROJECT_DIR$/mall-item-web" />
     <file type="web" url="file://$PROJECT_DIR$/mall-manager-web" />
     <file type="web" url="file://$PROJECT_DIR$/mall-manager/mall-manager-service" />
     <file type="web" url="file://$PROJECT_DIR$/mall-portal-web" />
     <file type="web" url="file://$PROJECT_DIR$/mall-search-web" />
     <file type="web" url="file://$PROJECT_DIR$/mall-search/mall-search-service" />
   </component>
+  <component name="JavaScriptSettings">
+    <option name="languageLevel" value="ES6" />
+  </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/mall-parent/pom.xml" />
         <option value="$PROJECT_DIR$/mall-common/pom.xml" />
-        <option value="$PROJECT_DIR$/mall-manager/pom.xml" />
-        <option value="$PROJECT_DIR$/mall-manager-web/pom.xml" />
-        <option value="$PROJECT_DIR$/mall-portal-web/pom.xml" />
-        <option value="$PROJECT_DIR$/mall-content/pom.xml" />
+        <option value="$PROJECT_DIR$/mall-parent/pom.xml" />
         <option value="$PROJECT_DIR$/mall-search/pom.xml" />
+        <option value="$PROJECT_DIR$/mall-content/pom.xml" />
+        <option value="$PROJECT_DIR$/mall-manager/pom.xml" />
+        <option value="$PROJECT_DIR$/mall-item-web/pom.xml" />
+        <option value="$PROJECT_DIR$/mall-portal-web/pom.xml" />
         <option value="$PROJECT_DIR$/mall-search-web/pom.xml" />
+        <option value="$PROJECT_DIR$/mall-manager-web/pom.xml" />
       </list>
     </option>
   </component>

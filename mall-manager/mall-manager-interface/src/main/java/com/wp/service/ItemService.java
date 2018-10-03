@@ -12,7 +12,9 @@ import com.wp.pojo.TbItemDesc;
  * @create: 2018-09-22 11:12
  **/
 public interface ItemService {
+
     TbItem getItemById(Long id);
+
     PageResult getItemPage(int page, int rows);
 
     E3Result saveItem(TbItem tbItem, String desc);

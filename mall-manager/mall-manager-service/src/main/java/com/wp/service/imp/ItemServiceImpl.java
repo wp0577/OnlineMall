@@ -2,15 +2,18 @@ package com.wp.service.imp;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.wp.common.jedis.JedisClientPool;
 import com.wp.common.pojo.E3Result;
 import com.wp.common.pojo.PageResult;
 import com.wp.common.util.IDUtils;
+import com.wp.common.util.JsonUtils;
 import com.wp.mapper.TbItemDescMapper;
 import com.wp.mapper.TbItemMapper;
 import com.wp.pojo.TbItem;
 import com.wp.pojo.TbItemDesc;
 import com.wp.pojo.TbItemExample;
 import com.wp.service.ItemService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
@@ -40,10 +43,46 @@ public class ItemServiceImpl implements ItemService {
     @Resource
     //get bean by id
     private Destination topicDestination;
+    @Autowired
+    private JedisClientPool jedisClientPool;
+
 
     @Override
     public TbItem getItemById(Long id) {
-        return tbItemMapper.selectByPrimaryKey(id);
+        //query cache in redis first, it not continue
+        try {
+            String s = jedisClientPool.get("ITEM_INFO:" + id + ":BASE");
+            if(s != null && StringUtils.isNotBlank(s)) return JsonUtils.jsonToPojo(s, TbItem.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        TbItem tbItem = tbItemMapper.selectByPrimaryKey(id);
+        try {
+            jedisClientPool.set("ITEM_INFO:" + id + ":BASE", JsonUtils.objectToJson(tbItem));
+            jedisClientPool.expire("ITEM_INFO:" + id + ":BASE", 3600);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tbItem;
+    }
+
+    @Override
+    public TbItemDesc getItemDescById(long id) {
+        //query cache in redis first, it not continue
+        try {
+            String s = jedisClientPool.get("ITEM_INFO:" + id + ":DESC");
+            if(s != null && StringUtils.isNotBlank(s)) return JsonUtils.jsonToPojo(s, TbItemDesc.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        TbItemDesc tbItemDesc = tbItemDescMapper.selectByPrimaryKey(id);
+        try {
+            jedisClientPool.set("ITEM_INFO:" + id + ":DESC", JsonUtils.objectToJson(tbItemDesc));
+            jedisClientPool.expire("ITEM_INFO:" + id + ":DESC", 3600);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tbItemDesc;
     }
 
     @Override
@@ -57,12 +96,6 @@ public class ItemServiceImpl implements ItemService {
         PageInfo<TbItem> pageInfo = new PageInfo<>(tbItems);
         pageResult.setTotal((int)pageInfo.getTotal());
         return pageResult;
-    }
-
-    @Override
-    public TbItemDesc getItemDescById(long id) {
-        TbItemDesc tbItemDesc = tbItemDescMapper.selectByPrimaryKey(id);
-        return tbItemDesc;
     }
 
     @Override
