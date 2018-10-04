@@ -14,7 +14,7 @@
     <context:property-placeholder location="classpath:conf/*.properties"/>
 
     <!--配置全局异常处理器-->
-    <bean class="com.wp.search.controller.com.wp.search.Exeception.MyExeception"/>
+    <bean class="com.wp.search.Exeception.MyExeception"/>
 
     <!-- 引用dubbo服务 -->
     <dubbo:application name="e3-search-web"/>

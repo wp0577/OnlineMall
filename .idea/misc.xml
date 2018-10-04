@@ -25,6 +25,7 @@
         <option value="$PROJECT_DIR$/mall-portal-web/pom.xml" />
         <option value="$PROJECT_DIR$/mall-search-web/pom.xml" />
         <option value="$PROJECT_DIR$/mall-manager-web/pom.xml" />
+        <option value="$PROJECT_DIR$/mall-sso/pom.xml" />
       </list>
     </option>
   </component>

@@ -19,6 +19,7 @@
         <module name="mall-search-interface" />
         <module name="mall-search-service" />
         <module name="mall-search-web" />
+        <module name="mall-sso" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

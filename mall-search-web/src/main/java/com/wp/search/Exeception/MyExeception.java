@@ -1,4 +1,4 @@
-package com.wp.search.controller.com.wp.search.Exeception;
+package com.wp.search.Exeception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
