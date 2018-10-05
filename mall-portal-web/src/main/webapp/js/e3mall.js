@@ -1,6 +1,6 @@
 var E3MALL = {
 	checkLogin : function(){
-		var _ticket = $.cookie("TT_TOKEN");
+		var _ticket = $.cookie("COOKIE_TOKEN_KEY");
 		if(!_ticket){
 			return ;
 		}
@@ -21,5 +21,6 @@ var E3MALL = {
 
 $(function(){
 	// 查看是否已经登录，如果已经登录查询登录信息
+	alert("test");
 	E3MALL.checkLogin();
 });
