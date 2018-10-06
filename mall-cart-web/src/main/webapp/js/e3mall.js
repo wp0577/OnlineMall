@@ -1,6 +1,6 @@
 var E3MALL = {
 	checkLogin : function(){
-		var _ticket = $.cookie("COOKIE_TOKEN_KEY");
+		var _ticket = $.cookie("TT_TOKEN");
 		if(!_ticket){
 			return ;
 		}

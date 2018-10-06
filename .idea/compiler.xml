@@ -6,6 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="mall-cart-interface" />
+        <module name="mall-cart-service" />
+        <module name="mall-cart-web" />
         <module name="mall-common" />
         <module name="mall-content-interface" />
         <module name="mall-content-service" />

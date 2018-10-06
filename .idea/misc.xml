@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/mall-cart-web" />
     <file type="web" url="file://$PROJECT_DIR$/mall-content/mall-content-service" />
     <file type="web" url="file://$PROJECT_DIR$/mall-item-web" />
     <file type="web" url="file://$PROJECT_DIR$/mall-manager-web" />
@@ -29,6 +30,8 @@
         <option value="$PROJECT_DIR$/mall-manager-web/pom.xml" />
         <option value="$PROJECT_DIR$/mall-sso/pom.xml" />
         <option value="$PROJECT_DIR$/mall-sso-web/pom.xml" />
+        <option value="$PROJECT_DIR$/mall-cart/pom.xml" />
+        <option value="$PROJECT_DIR$/mall-cart-web/pom.xml" />
       </list>
     </option>
   </component>
