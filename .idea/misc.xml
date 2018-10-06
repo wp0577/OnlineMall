@@ -3,6 +3,7 @@
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/mall-cart-web" />
+    <file type="web" url="file://$PROJECT_DIR$/mall-cart/mall-cart-service" />
     <file type="web" url="file://$PROJECT_DIR$/mall-content/mall-content-service" />
     <file type="web" url="file://$PROJECT_DIR$/mall-item-web" />
     <file type="web" url="file://$PROJECT_DIR$/mall-manager-web" />

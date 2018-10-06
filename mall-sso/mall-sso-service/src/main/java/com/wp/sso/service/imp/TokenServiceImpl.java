@@ -1,6 +1,5 @@
 package com.wp.sso.service.imp;
 
-import com.wp.common.jedis.JedisClient;
 import com.wp.common.pojo.E3Result;
 import com.wp.common.util.JsonUtils;
 import com.wp.pojo.TbUser;

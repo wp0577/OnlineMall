@@ -2,7 +2,6 @@ package com.wp.service.imp;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.wp.common.jedis.JedisClientPool;
 import com.wp.common.pojo.E3Result;
 import com.wp.common.pojo.PageResult;
 import com.wp.common.util.IDUtils;
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.jms.*;
-import javax.swing.*;
 import java.util.Date;
 import java.util.List;
 

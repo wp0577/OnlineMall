@@ -1,11 +1,21 @@
 package com.wp.common.jedis;
 
+import java.util.List;
+
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 public class JedisClientPool implements JedisClient {
-
+	
 	private JedisPool jedisPool;
+
+	public JedisPool getJedisPool() {
+		return jedisPool;
+	}
+
+	public void setJedisPool(JedisPool jedisPool) {
+		this.jedisPool = jedisPool;
+	}
 
 	@Override
 	public String set(String key, String value) {
@@ -79,11 +89,28 @@ public class JedisClientPool implements JedisClient {
 		return result;
 	}
 
-	public void setJedisPool(JedisPool jedisPool) {
-		this.jedisPool = jedisPool;
+	@Override
+	public Boolean hexists(String key, String field) {
+		Jedis jedis = jedisPool.getResource();
+		Boolean result = jedis.hexists(key, field);
+		jedis.close();
+		return result;
 	}
 
-	public JedisPool getJedisPool() {
-		return jedisPool;
+	@Override
+	public List<String> hvals(String key) {
+		Jedis jedis = jedisPool.getResource();
+		List<String> result = jedis.hvals(key);
+		jedis.close();
+		return result;
 	}
+
+	@Override
+	public Long del(String key) {
+		Jedis jedis = jedisPool.getResource();
+		Long result = jedis.del(key);
+		jedis.close();
+		return result;
+	}
+
 }

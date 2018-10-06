@@ -1,9 +1,11 @@
 package com.wp.cart.controller;
 
+import com.wp.cart.service.CartService;
 import com.wp.common.pojo.E3Result;
 import com.wp.common.util.CookieUtils;
 import com.wp.common.util.JsonUtils;
 import com.wp.pojo.TbItem;
+import com.wp.pojo.TbUser;
 import com.wp.service.ItemService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +29,19 @@ public class CartController {
     private Integer CART_COOKIE_EXPIRE;
     @Autowired
     private ItemService itemService;
+    @Autowired
+    private CartService cartServicel;
 
     @RequestMapping("/cart/add/{itemId}")
     public String addCart(@PathVariable Long itemId, Integer num, HttpServletRequest request,
                           HttpServletResponse response) {
+        //判断是否登录
+        //如果登录则加入redis
+        Object user = request.getAttribute("user");
+        if(user != null) {
+            E3Result e3Result = cartServicel.addCart(itemId, ((TbUser) user).getId(), num);
+            return "cartSuccess";
+        }
         //从cookie中查询商品列表。
         List<TbItem> cartList = getCartList(request);
         //设置一个flag，用来表示是否存在商品'
@@ -60,8 +71,21 @@ public class CartController {
         return "cartSuccess";
     }
 
+    /** 
+    * @Description: 该业务逻辑是，登录和未登录的购物车是不同的数据，不会合并 
+    * @Param:  
+    * @return:  
+    * @Author: Pan wu
+    * @Date: 10/5/18 
+    */ 
     @RequestMapping("/cart/cart")
     public String showCart(HttpServletRequest request) {
+        Object user = request.getAttribute("user");
+        if(user != null) {
+            List<TbItem> tbItems = cartServicel.getCart(((TbUser) user).getId());
+            request.setAttribute("cartList", tbItems);
+            return "cart";
+        }
         List<TbItem> cartList = getCartList(request);
         request.setAttribute("cartList", cartList);
         return "cart";
@@ -70,6 +94,10 @@ public class CartController {
     @RequestMapping("cart/update/num/{itemId}/{num}")
     @ResponseBody
     public E3Result updateCart(@PathVariable Long itemId, @PathVariable Integer num, HttpServletRequest request, HttpServletResponse response) {
+        Object user = request.getAttribute("user");
+        if(user != null) {
+            return cartServicel.update(itemId, ((TbUser) user).getId(), num);
+        }
         List<TbItem> cartList = getCartList(request);
         for (TbItem tbItem:cartList) {
             if(tbItem.getId().equals(itemId)) {
@@ -82,6 +110,24 @@ public class CartController {
     }
 
 
+    @RequestMapping("cart/delete/{itemId}")
+    public String deleteCart(@PathVariable Long itemId, HttpServletRequest request, HttpServletResponse response) {
+        Object user = request.getAttribute("user");
+        if(user != null) {
+            cartServicel.delete(itemId, ((TbUser) user).getId());
+            return "redirect:/cart/cart.html";
+        }
+        List<TbItem> cartList = getCartList(request);
+        for (TbItem tbItem:cartList) {
+            if(tbItem.getId().equals(itemId)) {
+                cartList.remove(tbItem);
+                break;
+            }
+        }
+        CookieUtils.setCookie(request, response ,CART_COOKIE, JsonUtils.objectToJson(cartList), CART_COOKIE_EXPIRE, true);
+        //需要在后缀加上.html，不然不会被springMVC拦截
+        return "redirect:/cart/cart.html";
+    }
 
     /** 
     * @Description: get cart list from cookie, if not exisit return new Arraylist(); 

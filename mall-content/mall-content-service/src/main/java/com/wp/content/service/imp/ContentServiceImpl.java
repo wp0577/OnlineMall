@@ -2,7 +2,6 @@ package com.wp.content.service.imp;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.wp.common.jedis.JedisClient;
 import com.wp.common.pojo.CatResult;
 import com.wp.common.pojo.E3Result;
 import com.wp.common.pojo.PageResult;

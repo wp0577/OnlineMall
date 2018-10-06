@@ -1,13 +1,11 @@
 package com.wp.sso.service.imp;
 
-import com.wp.common.jedis.JedisClient;
 import com.wp.common.pojo.E3Result;
 import com.wp.common.util.JsonUtils;
 import com.wp.mapper.TbUserMapper;
 import com.wp.pojo.TbUser;
 import com.wp.pojo.TbUserExample;
 import com.wp.sso.service.LoginService;
-import org.noggit.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
