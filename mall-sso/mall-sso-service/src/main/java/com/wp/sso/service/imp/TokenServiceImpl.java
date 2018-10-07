@@ -20,9 +20,9 @@ public class TokenServiceImpl implements TokenService {
         //从url中取参数。
         //根据token查询redis。
         String s = jedisClient.get("SESSION:" + token);
-        if(!StringUtils.isNotBlank(s)) {
+        if (StringUtils.isBlank(s)) {
             //如果查询不到数据。返回用户已经过期。
-            E3Result.build(202, "user has been expired");
+            return E3Result.build(202, "user has been expired");
         }
         //如果查询到数据，说明用户已经登录。
         //需要重置key的过期时间。

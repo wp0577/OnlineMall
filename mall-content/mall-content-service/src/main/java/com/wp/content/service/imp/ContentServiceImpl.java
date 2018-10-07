@@ -2,6 +2,7 @@ package com.wp.content.service.imp;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.wp.common.jedis.JedisClient;
 import com.wp.common.pojo.CatResult;
 import com.wp.common.pojo.E3Result;
 import com.wp.common.pojo.PageResult;
@@ -137,11 +138,14 @@ public class ContentServiceImpl implements ContentService {
 
     @Override
     public void deleteContent(long[] ids) {
+        //delete redis by cid
+        //get cid by id
+        TbContent tbContent = tbContentMapper.selectByPrimaryKey(ids[0]);
+        jedisClient.hdel(CONTENT_LIST, tbContent.getCategoryId().toString());
         for (long id: ids) {
             tbContentMapper.deleteByPrimaryKey(id);
         }
-        // TODO: 9/30/18
-        //delete redis by cid
+
     }
 
     @Override

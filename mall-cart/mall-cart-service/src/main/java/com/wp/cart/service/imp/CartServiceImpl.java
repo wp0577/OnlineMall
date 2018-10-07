@@ -81,4 +81,19 @@ public class CartServiceImpl implements CartService {
         jedisClient.hdel(CART_REDIS_KEY + ":" + userId, itemId + "");
         return E3Result.ok();
     }
+
+    @Override
+    public E3Result mergeCart(long userId, List<TbItem> itemList) {
+        //遍历商品列表
+        //把列表添加到购物车。
+        //判断购物车中是否有此商品
+        //如果有，数量相加
+        //如果没有添加新的商品
+        for (TbItem tbItem : itemList) {
+            addCart(tbItem.getId(), userId, tbItem.getNum());
+        }
+        //返回成功
+        return E3Result.ok();
+    }
+
 }

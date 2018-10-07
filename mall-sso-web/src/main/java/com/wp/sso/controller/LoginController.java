@@ -5,6 +5,7 @@ import com.wp.common.util.CookieUtils;
 import com.wp.sso.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -23,8 +24,10 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
+    //接受redirect参数，用来回调页面
     @RequestMapping("/page/login")
-    public String loginPage() {
+    public String loginPage(String redirect, Model model) {
+        model.addAttribute("redirect", redirect);
         return "login";
     }
 

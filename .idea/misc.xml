@@ -8,6 +8,8 @@
     <file type="web" url="file://$PROJECT_DIR$/mall-item-web" />
     <file type="web" url="file://$PROJECT_DIR$/mall-manager-web" />
     <file type="web" url="file://$PROJECT_DIR$/mall-manager/mall-manager-service" />
+    <file type="web" url="file://$PROJECT_DIR$/mall-order-web" />
+    <file type="web" url="file://$PROJECT_DIR$/mall-order/mall-order-service" />
     <file type="web" url="file://$PROJECT_DIR$/mall-portal-web" />
     <file type="web" url="file://$PROJECT_DIR$/mall-search-web" />
     <file type="web" url="file://$PROJECT_DIR$/mall-search/mall-search-service" />
@@ -33,6 +35,8 @@
         <option value="$PROJECT_DIR$/mall-sso-web/pom.xml" />
         <option value="$PROJECT_DIR$/mall-cart/pom.xml" />
         <option value="$PROJECT_DIR$/mall-cart-web/pom.xml" />
+        <option value="$PROJECT_DIR$/mall-order-web/pom.xml" />
+        <option value="$PROJECT_DIR$/mall-order/pom.xml" />
       </list>
     </option>
   </component>

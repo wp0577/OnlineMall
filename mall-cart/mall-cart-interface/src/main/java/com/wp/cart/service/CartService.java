@@ -13,4 +13,6 @@ public interface CartService {
     E3Result update(Long itemId, Long userId, int num);
 
     E3Result delete(Long itemId, Long userId);
+
+    E3Result mergeCart(long userId, List<TbItem> itemList);
 }
